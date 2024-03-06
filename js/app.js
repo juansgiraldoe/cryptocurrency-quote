@@ -52,5 +52,14 @@ function submitForm(e) {
 };
 
 function imprimirAlerta(msg) {
-  
-}
+  const divMensaje =  document.createElement('DIV');
+  const classError = document.querySelector('.error');
+  if (!classError) {
+    divMensaje.classList.add('error');
+    divMensaje.textContent = msg;
+    formulario.appendChild(divMensaje);
+    setTimeout(() => {
+      divMensaje.remove();
+    }, 2000);
+  };
+};
