@@ -49,6 +49,8 @@ function submitForm(e) {
     imprimirAlerta('Ambos campos son obligatorios');
     return;
   };
+
+  consultarAPI();
 };
 
 function imprimirAlerta(msg) {
@@ -62,4 +64,19 @@ function imprimirAlerta(msg) {
       divMensaje.remove();
     }, 2000);
   };
+};
+
+function consultarAPI() {
+  const {moneda, criptomoneda} = objBusqueda;
+  const url =`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(cotizacion => {
+      mostrarCorizacion(cotizacion.DISPLAY[criptomoneda][moneda])
+    });
+};
+
+function mostrarCorizacion(cotizacion) {
+  
 };
