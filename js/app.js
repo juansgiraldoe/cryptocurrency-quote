@@ -70,13 +70,15 @@ function imprimirAlerta(msg) {
 
 function consultarAPI() {
   const {moneda, criptomoneda} = objBusqueda;
+  mostrarSpinner();
   const url =`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
-
-  fetch(url)
-    .then(res => res.json())
-    .then(cotizacion => {
-      mostrarCorizacion(cotizacion.DISPLAY[criptomoneda][moneda])
-    });
+  setTimeout(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(cotizacion => {
+        mostrarCorizacion(cotizacion.DISPLAY[criptomoneda][moneda])
+      });
+  }, 1000);
 };
 
 function mostrarCorizacion(cotizacion) {
@@ -107,4 +109,18 @@ function limpiarhtml(selector) {
   while (selector.firstChild) {
     selector.removeChild(selector.firstChild);
   };
+};
+
+function mostrarSpinner() {
+  limpiarhtml(resultado);
+  const spinner = document.createElement('DIV');
+  spinner.classList.add('sk-chase');
+  spinner.innerHTML = `
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+  `;
+  resultado.appendChild(spinner);
 };
